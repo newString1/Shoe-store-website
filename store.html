@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shoe Search Website</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    
+    body {
+      background-image: url('https://wallpaperaccess.com/full/680075.jpg');
+      background-repeat: no-repeat;
+      background-size: 100% 100%;
+      background-position: center;
+    }
+    
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-end;
+      justify-content: center;
+      height: 100vh;
+      padding: 20px;
+      color: #259306;
+      text-align: right;
+    }
+
+    .text {
+      font-size: 2rem;
+      line-height: 1.5;
+    }
+
+    .text::before {
+      content: ' ';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: radial-gradient(circle, #04ea92 5%, transparent 20%);
+      transform: scale(10);
+      opacity: 0.1;
+      z-index: -1;
+      animation: pulsateAnimation 2s ease-in-out infinite;
+    }
+
+    @keyframes pulsateAnimation {
+      0% { transform: scale(1); opacity: 0.1; }
+      50% { transform: scale(10); opacity: 0.01; }
+      100% { transform: scale(1); opacity: 0.1; }
+    }
+
+    .button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 1rem;
+      background-color: #259306;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="text">
+      LOVE<br>
+      THE<br>
+      PLANET<br>
+      WE WALK ON
+    </div>
+    <button class="button" onclick="redirectToOtherWebsite()">Check Availability</button>
+    <button class="button" onclick="redirectToStoreWebsite()">Store</button>
+  </div>
+
+  <script>
+    function redirectToOtherWebsite() {
+      window.location.href = "onlineshoe.php";  
+    }
+
+    function redirectToStoreWebsite() {
+      window.location.href = "store4.php";  
+    }
+  </script>
+</body>
+</html>
+
+

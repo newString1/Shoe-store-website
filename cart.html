@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Shoe Store</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap">
+  <style>
+    body {
+      background-color: #1f1f1f;
+      font-family: Roboto, sans-serif;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+    }
+
+    .header {
+      background-color: #24292e;
+      padding: 20px;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+      color: #fff;
+    }
+
+    .shoe-container {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-top: 30px;
+    }
+
+    .shoe-item {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 10px;
+      background-color: #333;
+      border-radius: 6px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+      margin: 10px;
+      width: 300px;
+      transition: transform 0.3s;
+      overflow: hidden;
+    }
+
+    .shoe-item:hover {
+      transform: translateY(-5px);
+      background-color: #444;
+    }
+
+    .shoe-image {
+      width: 100%;
+      max-height: 200px;
+      object-fit: cover;
+      border-radius: 6px;
+    }
+
+    .shoe-name {
+      font-weight: bold;
+      margin: 10px 0;
+    }
+
+    .add-to-cart-btn {
+      background-color: #24292e;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    .add-to-cart-btn:hover {
+      background-color: #0366d6;
+    }
+
+    .cart {
+      border: 1px solid #24292e;
+      padding: 10px;
+      background-color: #333;
+      max-width: 300px;
+      margin: 20px auto;
+      border-radius: 8px;
+    }
+
+    .cart h2 {
+      margin-top: 0;
+      text-align: center;
+      font-size: 1.2em;
+      color: #fff;
+    }
+
+    .cart-items {
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .cart-items li {
+      padding: 5px 0;
+      border-bottom: 1px solid #24292e;
+      cursor: pointer;
+    }
+
+    .cart-items li:hover {
+      background-color: #444;
+    }
+
+    .clear-cart-btn {
+      background-color: #24292e;
+      color: #fff;
+      border: none;
+      padding: 8px 12px;
+      border-radius: 4px;
+      cursor: pointer;
+      margin-top: 10px;
+      transition: background-color 0.3s;
+    }
+
+    .clear-cart-btn:hover {
+      background-color: #c62828;
+    }
+
+    .shoe-item .cursor {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 20px;
+      height: 20px;
+      background: radial-gradient(circle at 50% 50%, rgba(3, 150, 255, 0.7) 0%, rgba(0, 34, 107, 0.5) 100%);
+      border-radius: 50%;
+      mix-blend-mode: lighten;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .shoe-item:hover .cursor {
+      opacity: 0.7;
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .cursor {
+        animation: none;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <h1>Shoe Store</h1>
+  </div>
+
+  <div class="shoe-container">
+    <div class="shoe-item" onclick="addToCart('Shoe 1')">
+      <img class="shoe-image" src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/5b8aa82f-e010-4052-a2e6-d81db2729fd0/air-force-1-high-07-lx-shoes-wb31gJ.png" alt="Shoe 1">
+      <span class="shoe-name">Shoe 1</span>
+      <button class="add-to-cart-btn">Add to Cart</button>
+      <div class="cursor"></div>
+    </div>
+
+    <div class="shoe-item" onclick="addToCart('Shoe 2')">
+      <img class="shoe-image" src="https://static.nike.com/a/images/c_limit,w_592,f_auto/t_product_v1/63f8ba82-1538-4a49-b2cf-feb96653a967/air-max-90-shoes-kRsBnD.png" alt="Shoe 2">
+      <span class="shoe-name">Shoe 2</span>
+      <button class="add-to-cart-btn">Add to Cart</button>
+      <div class="cursor"></div>
+    </div>
+  </div>
+
+  <div class="cart">
+    <h2>Cart</h2>
+    <ul id="cart-items" class="cart-items"></ul>
+    <button class="clear-cart-btn" onclick="clearCart()">Clear Cart</button>
+  </div>
+
+  <script>
+    function addToCart(item) {
+      var cartItems = document.getElementById('cart-items');
+      var li = document.createElement('li');
+      li.textContent = item;
+      cartItems.appendChild(li);
+      updateCartCount();
+    }
+
+    function clearCart() {
+      var cartItems = document.getElementById('cart-items');
+      cartItems.innerHTML = '';
+      updateCartCount();
+    }
+
+    function updateCartCount() {
+      var cartCount = document.getElementById('cart-count');
+      var itemCount = document.getElementById('cart-items').childElementCount;
+      cartCount.textContent = itemCount;
+    }
+
+    var cursorList = document.querySelectorAll('.cursor');
+
+    document.addEventListener('mousemove', function(e) {
+      cursorList.forEach(function(cursor) {
+        var shoeItem = cursor.closest('.shoe-item');
+        if (shoeItem) {
+          cursor.style.opacity = 1;
+          cursor.style.top = e.clientY - shoeItem.offsetTop + 'px';
+          cursor.style.left = e.clientX - shoeItem.offsetLeft + 'px';
+        } else {
+          cursor.style.opacity = 0;
+        }
+      });
+    });
+  </script>
+</body>
+</html>
